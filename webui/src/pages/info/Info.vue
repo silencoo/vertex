@@ -13,30 +13,11 @@
     </a-descriptions>
     <a-divider></a-divider>
     <a-descriptions
-      title="交流群组"
-      :column="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }"
-      >
-      <a-descriptions-item label="Telegram 频道"><a @click="gotoChannel">前往</a></a-descriptions-item>
-      <a-descriptions-item label="Telegram 群组"><a @click="gotoGroup">前往</a></a-descriptions-item>
-      <a-descriptions-item label="交流群">852643057</a-descriptions-item>
-    </a-descriptions>
-    <a-divider></a-divider>
-    <a-descriptions
-      title="开源代码"
-      :column="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }"
-      >
-      <a-descriptions-item label="开源代码"><a @click="gotoGithub">GITHUB</a></a-descriptions-item>
-    </a-descriptions>
-    <a-divider></a-divider>
-    <a-descriptions
       title="使用说明"
       :column="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }"
       >
       <a-descriptions-item label="Wiki"><a @click="gotoWiki">Wiki</a></a-descriptions-item>
     </a-descriptions>
-    <a-divider></a-divider>
-    <div style="font-size: 16px; font-weight: bold;">打赏，如果你觉得这个项目对你有帮助，可以对我打赏，感谢！</div>
-    <img style="max-height: 320px; max-width: calc(100vw - 32px); margin: 0 auto;" src="https://lswl.in/assets/images/alipay_qrcode.png"/>
   </div>
 </template>
 <script>
@@ -63,23 +44,11 @@ export default {
         await this.$message().error(e.message);
       }
     },
-    async gotoChannel () {
-      window.open('https://t.me/lswl_vertex');
-    },
-    async gotoGroup () {
-      window.open('https://t.me/group_vertex');
-    },
     async gotoWiki () {
       window.open('https://wiki.vertex-app.top');
     },
     async gotoVersion () {
-      window.open('https://lswl.in/2022/01/14/vertex-changelog');
-    },
-    async gotoGithub () {
-      window.open('https://github.com/vertex-app/Vertex');
-    },
-    async gotoGitlab () {
-      window.open('https://gitlab.lswl.in/lswl/vertex');
+      window.open('https://github.com/silencoo/vertex');
     }
   },
   async mounted () {
