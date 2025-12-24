@@ -776,9 +776,13 @@ const _getTorrentsFappaizuri = async function (rssUrl) {
       url: '',
       link: ''
     };
-    torrent.size = items[i].description[0].match(/Size: (\d+\.\d+ [MGKT]B)/);
-    if (torrent.size) {
-      torrent.size = util.calSize(...torrent.size[1].replace(/([MGKT])B/, '$1iB').split(' '));
+    // 支持两种格式: "Size: X GB" 或 "<size>X GB</size>"
+    let sizeMatch = items[i].description[0].match(/Size: (\d+\.\d+ [MGKT]B)/);
+    if (!sizeMatch) {
+      sizeMatch = items[i].description[0].match(/<size>([\d.]+\s*[MGKT]B)<\/size>/i);
+    }
+    if (sizeMatch) {
+      torrent.size = util.calSize(...sizeMatch[1].replace(/([MGKT])B/, '$1iB').split(' '));
     } else {
       torrent.size = 0;
     }
