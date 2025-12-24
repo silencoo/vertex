@@ -776,10 +776,19 @@ const _getTorrentsFappaizuri = async function (rssUrl) {
       url: '',
       link: ''
     };
+    // 获取description，可能是字符串或数组
+    let description = items[i].description;
+    if (Array.isArray(description)) {
+      description = description[0];
+    }
+    if (typeof description !== 'string') {
+      logger.error('fappaizuri.me description is not a string:', description);
+      continue;
+    }
     // 支持两种格式: "Size: X GB" 或 "<size>X GB</size>"
-    let sizeMatch = items[i].description[0].match(/Size: (\d+\.\d+ [MGKT]B)/);
+    let sizeMatch = description.match(/Size: (\d+\.\d+ [MGKT]B)/);
     if (!sizeMatch) {
-      sizeMatch = items[i].description[0].match(/<size>([\d.]+\s*[MGKT]B)<\/size>/i);
+      sizeMatch = description.match(/<size>([\d.]+\s*[MGKT]B)<\/size>/i);
     }
     if (sizeMatch) {
       torrent.size = util.calSize(...sizeMatch[1].replace(/([MGKT])B/, '$1iB').split(' '));
