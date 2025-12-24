@@ -851,7 +851,6 @@ const _getTorrentsSeedpool = async function (rssUrl) {
   return torrents;
 };
 
-
 const _getTorrentsWrapper = {
   'filelist.io': _getTorrentsFileList,
   'blutopia.cc': _getTorrentsUnit3D2,
