@@ -776,22 +776,31 @@ const _getTorrentsFappaizuri = async function (rssUrl) {
       url: '',
       link: ''
     };
-    // 获取description，可能是字符串或数组
+    // 获取description，可能是字符串或数组或对象
     let description = items[i].description;
     if (Array.isArray(description)) {
       description = description[0];
     }
-    if (typeof description !== 'string') {
-      logger.error('fappaizuri.me description is not a string:', description);
-      continue;
-    }
-    // 支持两种格式: "Size: X GB" 或 "<size>X GB</size>"
-    let sizeMatch = description.match(/Size: (\d+\.\d+ [MGKT]B)/);
-    if (!sizeMatch) {
-      sizeMatch = description.match(/<size>([\d.]+\s*[MGKT]B)<\/size>/i);
-    }
-    if (sizeMatch) {
-      torrent.size = util.calSize(...sizeMatch[1].replace(/([MGKT])B/, '$1iB').split(' '));
+
+    // 处理 <size> 标签被解析为对象的情况: { _: 'Category: JAV ', size: [ '10.24 GB' ] }
+    if (typeof description === 'object' && description.size && description.size[0]) {
+      const sizeStr = description.size[0];
+      try {
+        torrent.size = util.calSize(...sizeStr.replace(/([MGKT])B/, '$1iB').split(' '));
+      } catch (e) {
+        torrent.size = 0;
+      }
+    } else if (typeof description === 'string') {
+      // 支持两种格式: "Size: X GB" 或 "<size>X GB</size>"
+      let sizeMatch = description.match(/Size: (\d+\.\d+ [MGKT]B)/);
+      if (!sizeMatch) {
+        sizeMatch = description.match(/<size>([\d.]+\s*[MGKT]B)<\/size>/i);
+      }
+      if (sizeMatch) {
+        torrent.size = util.calSize(...sizeMatch[1].replace(/([MGKT])B/, '$1iB').split(' '));
+      } else {
+        torrent.size = 0;
+      }
     } else {
       torrent.size = 0;
     }
