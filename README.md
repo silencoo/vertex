@@ -14,7 +14,3 @@ Vertex 目前已处于不新增功能，仅做问题修复的状态。
 
 #### Wiki
 [https://wiki.vertex-app.top](https://wiki.vertex-app.top)
-
-#### 打赏，如果你觉得这个项目对你有帮助，可以对我打赏，感谢！
-
-<figure><img src="https://lswl.in/assets/images/alipay_qrcode.png" alt="" width="375"><figcaption></figcaption></figure>
