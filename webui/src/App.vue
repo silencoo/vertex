@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div>
-      <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="fade-transform" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
     </div>
   </div>
 </template>
@@ -75,20 +79,40 @@ body {
 }
 */
 
+/* Transitions */
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-15px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(15px);
+}
+
 *::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #00BFFF;
+  background-color: rgba(24, 144, 255, 0.3);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(24, 144, 255, 0.6);
 }
 
 *::-webkit-scrollbar {
-  width : 3px;
-  height: 3px;
+  width : 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #ededed;
-  border-radius: 10px;
+  background: transparent;
 }
 
 </style>

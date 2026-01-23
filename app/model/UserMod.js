@@ -1,7 +1,7 @@
 const otp = require('../libs/otp');
 
 class UserMod {
-  login (options) {
+  login(options) {
     if (options.username !== global.auth.username) {
       throw new Error('用户名错误');
     }
@@ -14,7 +14,7 @@ class UserMod {
     return options.username;
   };
 
-  get (options) {
+  get(options) {
     const menu = [
       {
         title: '首页',
@@ -246,10 +246,6 @@ class UserMod {
           title: '系统日志',
           path: '/info/log',
           icon: ['fas', 'note-sticky']
-        }, {
-          title: '关于',
-          path: '/info/about',
-          icon: ['fas', 'circle-question']
         }]
       }
     ];

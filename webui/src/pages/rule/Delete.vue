@@ -43,7 +43,7 @@
         :labelCol="{ span: 3 }"
         :wrapperCol="{ span: 21 }"
         autocomplete="off"
-        :class="`container-form-${ isMobile() ? 'mobile' : 'pc' }`">
+        class="glass-card-form">
         <a-form-item
           label="别名"
           name="alias"
@@ -435,5 +435,23 @@ export default {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
+}
+
+.glass-card-form {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 24px;
+}
+
+:deep(.ant-table-thead > tr > th) {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+:deep(.ant-form-item-label > label) {
+  font-weight: 500;
 }
 </style>

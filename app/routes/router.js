@@ -13,7 +13,7 @@ const util = require('../libs/util');
 const client = redis.createClient(config.getRedisConfig());
 const RedisStore = require('connect-redis')(session);
 
-const multipartMiddleware = new Multipart();
+const multipartMiddleware = new Multipart({ maxFieldsSize: 512 * 1024 * 1024 });
 
 client.on('error', (err) => {
   logger.error('Redis:', err);
@@ -74,7 +74,7 @@ const clientProxy = function (req, res, next) {
     return;
   }
   proxy(client.clientUrl, {
-    proxyReqOptDecorator (proxyReqOpts, srcReq) {
+    proxyReqOptDecorator(proxyReqOpts, srcReq) {
       proxyReqOpts.headers.cookie = global.runningClient[clientId] ? global.runningClient[clientId].cookie || '' : '';
       if (proxyReqOpts.headers['content-type'] && proxyReqOpts.headers['content-type'].indexOf('application/x-www-form-urlencoded') !== -1) {
         proxyReqOpts.headers['content-type'] = 'application/x-www-form-urlencoded';
@@ -83,7 +83,7 @@ const clientProxy = function (req, res, next) {
       return proxyReqOpts;
     },
     reqBodyEncoding: null,
-    limit: '20mb'
+    limit: '500mb'
   })(req, res, next);
 };
 
@@ -99,7 +99,7 @@ const siteProxy = function (req, res, next) {
   }
   const siteUrl = global.runningSite[siteId].siteUrl;
   proxy(siteUrl, {
-    proxyReqOptDecorator (proxyReqOpts, srcReq) {
+    proxyReqOptDecorator(proxyReqOpts, srcReq) {
       proxyReqOpts.headers.cookie = global.runningSite[siteId] ? global.runningSite[siteId].cookie : '';
       proxyReqOpts.headers['user-agent'] = global.userAgent || 'Vertex';
       delete proxyReqOpts.headers['x-forwarded-for'];
@@ -133,9 +133,9 @@ module.exports = function (app, express, router) {
       maxAge: 1000 * 60 * 60 * 24 * 30
     }
   }));
-  app.use('/api', express.text({ type: 'text/xml' }));
-  app.use('/api', express.json({ limit: '50mb' }));
-  app.use('/api', express.urlencoded({ extended: false }));
+  app.use('/api', express.text({ type: 'text/xml', limit: '500mb' }));
+  app.use('/api', express.json({ limit: '500mb' }));
+  app.use('/api', express.urlencoded({ extended: false, limit: '500mb' }));
   app.use('/api', multipartMiddleware);
   app.use(setIp);
   app.use(checkAuth);

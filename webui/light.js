@@ -1,6 +1,12 @@
 const path = require('path');
+const fs = require('fs');
 
 const { generateTheme, getLessVars } = require('antd-theme-generator');
+const stylesDir = path.join(__dirname, './public/assets/styles');
+if (!fs.existsSync(stylesDir)) {
+  fs.mkdirSync(stylesDir, { recursive: true });
+}
+
 // const lessPath = './public/assets/styles/variables.less';
 
 const paths = [
@@ -14,7 +20,7 @@ const paths = [
     const lessPath = path.join(__dirname, p.path);
     await generateTheme({
       antDir: path.join(__dirname, './node_modules/ant-design-vue'), // node_modules中antd的路径
-      stylesDir: path.join(__dirname, './public/assets/styles'), // styles对应的目录路径
+      stylesDir: stylesDir, // styles对应的目录路径
       varFile: lessPath, // less变量的入口文件
       themeVariables: Object.keys(getLessVars(lessPath)), // 您要动态更改的变量列表
       outputFilePath: path.join(__dirname, p.output) // 生成的color.less文件的位置

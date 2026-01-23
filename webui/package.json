@@ -4,7 +4,9 @@
   "private": true,
   "author": "",
   "scripts": {
+    "preserve": "node light.js && node dark.js && node cyber.js",
     "serve": "vue-cli-service serve",
+    "prebuild": "node light.js && node dark.js && node cyber.js",
     "build": "vue-cli-service build",
     "eslint": "eslint src"
   },

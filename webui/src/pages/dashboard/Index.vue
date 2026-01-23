@@ -2,64 +2,53 @@
   <div class="index">
     <a-row type="flex" justify="center" align="middle" style="min-height: 100%;">
       <a-col :span="isMobile() ? 24 : 24">
-        <div style="margin: 24px auto; text-align: center; max-width: 1440px;">
-          <div class="data-rect-1 highlight-1">
-            <div style="font-size: 14px; font-weight: bold; color: #e0f0e9;">
-              <div>今日上传</div>
-              <div>UPLOAD</div>
-              <div style="margin: initial; font-size: 18px;">{{$formatSize(runInfo.uploadedToday)}}</div>
+        <div class="stats-container">
+          <div class="glass-card stat-card blue">
+            <div class="stat-content">
+              <div class="stat-label">今日上传</div>
+              <div class="stat-value">{{$formatSize(runInfo.uploadedToday)}}</div>
+              <div class="stat-sub">Today Upload</div>
             </div>
           </div>
-          <div class="data-rect-1" style="background: #eff;">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>今日下载</div>
-              <div>DOWNLOAD</div>
-              <div style="margin: initial; font-size: 18px;">{{$formatSize(runInfo.downloadedToday)}}</div>
+          <div class="glass-card stat-card cyan">
+            <div class="stat-content">
+              <div class="stat-label">今日下载</div>
+              <div class="stat-value">{{$formatSize(runInfo.downloadedToday)}}</div>
+              <div class="stat-sub">Today Download</div>
             </div>
           </div>
-          <div class="data-rect-1" style="background: #eff;">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>今日添加</div>
-              <div>ACCEPT</div>
-              <div style="margin: initial; font-size: 18px;">{{runInfo.addCountToday}}</div>
+          <div class="glass-card stat-card green">
+            <div class="stat-content">
+              <div class="stat-label">今日添加</div>
+              <div class="stat-value">{{runInfo.addCountToday}}</div>
+              <div class="stat-sub">Today Accept</div>
             </div>
           </div>
-          <div class="data-rect-1" style="background: #eff;">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>今日拒绝</div>
-              <div>REJECT</div>
-              <div style="margin: initial; font-size: 18px;">{{runInfo.rejectCountToday}}</div>
+          <div class="glass-card stat-card red">
+            <div class="stat-content">
+              <div class="stat-label">今日拒绝</div>
+              <div class="stat-value">{{runInfo.rejectCountToday}}</div>
+              <div class="stat-sub">Today Reject</div>
             </div>
           </div>
         </div>
-        <div style="margin: 24px auto; text-align: center; max-width: 1440px;">
-          <div class="data-rect-1 highlight-2">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>累计上传</div>
-              <div>UPLOAD</div>
-              <div style="margin: initial; font-size: 18px;">{{$formatSize(runInfo.uploaded)}}</div>
-            </div>
+
+        <div class="stats-container">
+          <div class="glass-card info-card">
+            <div class="stat-label">累计上传</div>
+            <div class="stat-value small">{{$formatSize(runInfo.uploaded)}}</div>
           </div>
-          <div class="data-rect-1" style="background: #eff;">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>累计下载</div>
-              <div>DOWNLOAD</div>
-              <div style="margin: initial; font-size: 18px;">{{$formatSize(runInfo.downloaded)}}</div>
-            </div>
+          <div class="glass-card info-card">
+            <div class="stat-label">累计下载</div>
+            <div class="stat-value small">{{$formatSize(runInfo.downloaded)}}</div>
           </div>
-          <div class="data-rect-1" style="background: #eff;">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>累计添加</div>
-              <div>ACCEPT</div>
-              <div style="margin: initial; font-size: 18px;">{{runInfo.addCount}}</div>
-            </div>
+          <div class="glass-card info-card">
+            <div class="stat-label">累计添加</div>
+            <div class="stat-value small">{{runInfo.addCount}}</div>
           </div>
-          <div class="data-rect-1" style="background: #eff;">
-            <div style="font-size: 14px; font-weight: bold;">
-              <div>累计拒绝</div>
-              <div>REJECT</div>
-              <div style="margin: initial; font-size: 18px;">{{runInfo.rejectCount}}</div>
-            </div>
+          <div class="glass-card info-card">
+            <div class="stat-label">累计拒绝</div>
+            <div class="stat-value small">{{runInfo.rejectCount}}</div>
           </div>
         </div>
         <!--
@@ -69,40 +58,27 @@
         </div>
         -->
         <div
-          style="margin: 24px auto; text-align: center; max-width: 1440px;"
+          class="clients-grid"
           v-if="runInfo.dashboardContent.filter(item => item === 'downloader')[0]"
           >
           <template v-for="(downloader, index ) in downloaders" :key="downloader.id">
             <div
               @click="gotoClient(`/proxy/client/${downloader.id}/`)"
-              v-if="index === 0"
-              class="data-rect-pointer data-rect-2 highlight-3"
-              :style="downloaders.length === 1 ? `width: ${isMobile() ? '336px' : '688px'}` : ''">
-              <!--
-              <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;">
-                <v-chart :option="downloader.speedChart"/>
+              class="glass-card client-card clickable"
+            >
+              <div class="client-header">
+                <div class="client-alias">{{ downloader.alias }}</div>
+                <fa :icon="['fas', 'cloud']" class="client-icon"/>
               </div>
-              -->
-              <div style="font-size: 14px; font-weight: bold; color: #fff; padding: 16px 16px;">
-                <div>{{ downloader.alias }}</div>
-                <div style="margin: initial; font-size: 12px;">累计数据: {{ $formatSize(downloader.allTimeUpload) }} ↑ / {{$formatSize(downloader.allTimeDownload)}} ↓</div>
-                <div style="margin: initial; font-size: 16px;">{{ $formatSize(downloader.uploadSpeed) }}/s ↑ / {{$formatSize(downloader.downloadSpeed)}}/s ↓</div>
-              </div>
-            </div>
-            <div
-              @click="gotoClient(`/proxy/client/${downloader.id}/`)"
-              v-if="index !== 0"
-              class="data-rect-pointer data-rect-2"
-              :style="(downloaders.length === index + 1 && downloaders.length % 2 === 1) ? `background: #eff; width: ${isMobile() ? '336px' : '688px'}` : 'background: #eff;'">
-              <!--
-              <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;">
-                <v-chart :option="downloader.speedChart"/>
-              </div>
-              -->
-              <div style="font-size: 14px; font-weight: bold; padding: 16px 16px;">
-                <div>{{ downloader.alias }}</div>
-                <div style="margin: initial; font-size: 12px;">累计数据: {{ $formatSize(downloader.allTimeUpload) }} ↑ / {{$formatSize(downloader.allTimeDownload)}} ↓</div>
-                <div style="margin: initial; font-size: 16px;">{{ $formatSize(downloader.uploadSpeed) }}/s ↑ / {{$formatSize(downloader.downloadSpeed)}}/s ↓</div>
+              <div class="client-data">
+                <div class="data-item">
+                  <span class="label">累计数据:</span>
+                  <span class="value">{{ $formatSize(downloader.allTimeUpload) }} ↑ / {{$formatSize(downloader.allTimeDownload)}} ↓</span>
+                </div>
+                <div class="data-item speed">
+                  <span class="value">{{ $formatSize(downloader.uploadSpeed) }}/s ↑</span>
+                  <span class="value">{{ $formatSize(downloader.downloadSpeed) }}/s ↓</span>
+                </div>
               </div>
             </div>
           </template>
@@ -495,91 +471,153 @@ export default {
 </script>
 <style scoped>
 .index {
-  width: min(calc(100vw - 40px), 960px);
-  margin: 0 auto;
-  height: 100%;
+  padding-bottom: 48px;
 }
 
-.highlight-1 {
-  background: #4b5cc4;
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px auto;
+  max-width: 1440px;
 }
 
-.highlight-2 {
-  background: lightpink;
+.glass-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.highlight-3 {
-  background: #3A8FB7;
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
-.highlight-4 {
-  background: #00896C;
+.stat-card {
+  width: 220px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
 }
 
-.data-rect-1 {
-  text-align: left;
-  vertical-align: top;
-  width: 160px;
-  height: 104px;
-  transition: all 0.5s;
-  padding: 16px 16px;
-  color: #555;
-  display: inline-block;
-  margin: 8px;
-  border-radius: 8px;
+.stat-card.blue { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.stat-card.cyan { background: linear-gradient(135deg, #00cdac 0%, #8ddad5 100%); }
+.stat-card.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+.stat-card.red { background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); }
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
-.data-rect-2 {
-  text-align: left;
-  vertical-align: top;
-  width: 336px;
-  height: 104px;
-  transition: all 0.5s;
-  color: #555;
-  position: relative;
-  display: inline-block;
-  margin: 8px;
-  border-radius: 8px;
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-.data-rect-3-pc {
-  text-align: left;
-  vertical-align: top;
-  width: 688px;
-  height: 104px;
-  transition: all 0.5s;
-  padding: 16px 16px;
-  color: #555;
-  display: inline-block;
-  margin: 8px;
-  border-radius: 8px;
+.stat-value.small {
+  font-size: 18px;
 }
 
-.data-rect-3-mobile {
-  text-align: left;
-  vertical-align: top;
-  width: 336px;
-  height: 104px;
-  transition: all 0.5s;
-  padding: 16px 16px;
-  color: #555;
-  display: inline-block;
-  margin: 8px;
-  border-radius: 8px;
+.stat-sub {
+  font-size: 10px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  margin-top: 4px;
 }
 
-.data-rect-pointer {
+.info-card {
+  width: 220px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+}
+
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 16px;
+  margin: 24px auto;
+  max-width: 1440px;
+}
+
+.client-card {
+  padding: 24px;
+}
+
+.client-card.clickable {
   cursor: pointer;
 }
 
-.tracker-chart {
-  height: 400px;
-  color: #000
+.client-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.torrent-chart {
-  height: 320px;
-  color: #000
+.client-alias {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.client-icon {
+  font-size: 20px;
+  color: #bfbfbf;
+}
+
+.client-data {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.data-item .label {
+  color: #8c8c8c;
+}
+
+.data-item .value {
+  font-weight: 500;
+}
+
+.data-item.speed {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #eee;
+}
+
+.data-item.speed .value {
+  color: #52c41a;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+  .clients-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-card, .info-card {
+    width: 100%;
+    margin: 0 16px;
+  }
 }
 
 </style>

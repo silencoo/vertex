@@ -42,7 +42,6 @@ import ToolClearHistory from '@/pages/tool/ClearHistory';
 
 import InfoInfo from '@/pages/info/Info';
 import InfoLog from '@/pages/info/Log';
-import InfoAbout from '@/pages/info/About';
 
 import SettingBase from '@/pages/setting/Base';
 import SettingStyle from '@/pages/setting/Style';
@@ -191,7 +190,7 @@ const base = {
 const info = {
   path: 'info',
   component: Layout,
-  redirect: '/info/about',
+  redirect: '/info/info',
   children: [
     {
       path: 'info',
@@ -204,12 +203,6 @@ const info = {
       component: InfoLog,
       meta: {
         title: '系统日志 - 系统信息'
-      }
-    }, {
-      path: 'about',
-      component: InfoAbout,
-      meta: {
-        title: '关于 - 系统信息'
       }
     }
   ]
