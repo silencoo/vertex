@@ -1,7 +1,7 @@
 const otp = require('../libs/otp');
 
 class UserMod {
-  login(options) {
+  login (options) {
     if (options.username !== global.auth.username) {
       throw new Error('用户名错误');
     }
@@ -12,9 +12,9 @@ class UserMod {
       throw new Error('两步验证错误');
     }
     return options.username;
-  };
+  }
 
-  get(options) {
+  get (options) {
     const menu = [
       {
         title: '首页',
@@ -262,7 +262,7 @@ class UserMod {
       }
     }
     return { menu };
-  };
+  }
 }
 
 module.exports = UserMod;

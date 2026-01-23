@@ -244,7 +244,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .logo {
   height: 32px;
   margin: 24px auto;
@@ -264,6 +264,7 @@ export default {
   font-family: 'consolas';
   font-weight: bold;
   background: linear-gradient(135deg, #1890ff, #52c41a);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

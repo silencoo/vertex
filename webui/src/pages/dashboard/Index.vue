@@ -61,7 +61,7 @@
           class="clients-grid"
           v-if="runInfo.dashboardContent.filter(item => item === 'downloader')[0]"
           >
-          <template v-for="(downloader, index ) in downloaders" :key="downloader.id">
+          <template v-for="downloader in downloaders" :key="downloader.id">
             <div
               @click="gotoClient(`/proxy/client/${downloader.id}/`)"
               class="glass-card client-card clickable"
@@ -87,7 +87,7 @@
           style="margin: 24px auto; text-align: center; max-width: 1440px;"
           v-if="runInfo.dashboardContent.filter(item => item === 'server')[0]"
           >
-          <template v-for="(server, index ) in servers" :key="server.id">
+          <template v-for="(server, index) in servers" :key="server.id">
             <div
               v-if="index === 0"
               class="data-rect-2 highlight-4"
@@ -469,7 +469,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .index {
   padding-bottom: 48px;
 }

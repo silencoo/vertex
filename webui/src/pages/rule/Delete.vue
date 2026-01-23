@@ -430,7 +430,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .delete-rule {
   width: 100%;
   max-width: 1440px;
