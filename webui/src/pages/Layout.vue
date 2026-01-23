@@ -270,7 +270,7 @@ export default {
 }
 
 .dashboard {
-  height: calc(var(--vh, 1vh) * 100);
+  height: ~"calc(var(--vh, 1vh) * 100)";
   background: #f0f2f5;
 }
 
